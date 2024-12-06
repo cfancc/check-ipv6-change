@@ -1,10 +1,10 @@
-FROM python:3.7-alpine
+FROM python:3.8
  
 RUN pip install requests
  
 COPY run.py /run.py
 
-ENV API="https://ddns.oray.com/checkip,https://ip.3322.net"
+ENV API="http://myip6.ipip.net/s,http://v6.ipv6-test.com/api/myip.php,https://api6.ipify.org/"
 ENV FROM_NAME=
 ENV FROM_EMAIL=
 ENV FROM_EMAIL_PASSWORD=
