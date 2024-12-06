@@ -2,6 +2,7 @@ import os
 import requests
 import re
 import time
+import ipaddress
 # smtplib 用于邮件的发信动作
 import smtplib
 # email 用于构建邮件内容
@@ -38,12 +39,25 @@ class ENV:
     self.email_header = '服务器检测到当前 ip 地址发生改变！' if os.environ.get("EMAIL_HEADER") == None else (os.environ.get("EMAIL_HEADER"))
     self.email_footer = '来自 Check IP Change' if os.environ.get("EMAIL_FOOTER") == None else (os.environ.get("EMAIL_FOOTER"))
 
+def extract_ips(text):
+    ip_addresses = []
+    # 将文本分割为潜在的IP地址片段
+    for word in text.split():
+        try:
+            # 使用 ipaddress 验证 IP 地址
+            ip = ipaddress.ip_address(word)
+            ip_addresses.append(word)  # 如果验证成功，添加到列表中
+        except ValueError:
+            # 跳过无效的地址
+            continue
+    return ip_addresses
+
 def current_ip(api_list):
-  headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"}
+  headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"}
   for api in api_list:
-    html = requests.get(api, headers=headers)
+    html = requests.get(api, headers=headers, verify=False)
     if(html.status_code == 200):
-      ocurrent_ip = re.findall( r'[0-9]+(?:\.[0-9]+){3}',html.text)[0]
+      ocurrent_ip = extract_ips(html.text)[0]
       return ocurrent_ip
   print("所有获取公网的 api 均不可用")
 
