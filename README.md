@@ -25,7 +25,7 @@ docker run -d \
 
 | 变量 | 含义 | 
 | --- | --- | 
-| API | 可以返回公网地址的 api，支持多个地址，以半角逗号隔开，默认为https://ddns.oray.com/checkip, https://ip.3322.net | 
+| API | 可以返回公网地址的 api，支持多个地址，以半角逗号隔开，默认为http://myip6.ipip.net/s,http://v6.ipv6-test.com/api/myip.php,https://api6.ipify.org/ | 
 | FROM_NAME | 自定义发送人名称 | 
 | FROM_EMAIL | 发送人邮箱（必填） | 
 | FROM_EMAIL_PASSWORD | 发送人邮箱授权码（必填） | 
